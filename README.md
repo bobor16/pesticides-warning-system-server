@@ -1,6 +1,7 @@
 # Installing
 
-Login for Copernicus
+Login credentials for Copernicus:
+
 Username: bobor
 Password: 12345678
 
