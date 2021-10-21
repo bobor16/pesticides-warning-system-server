@@ -20,9 +20,9 @@ for i in boundary['geometry']:
 
 user = cfg.user
 password = cfg.password
-api = SentinelAPI(user, password, 'https://scihub.copernicus.eu/dhus')
+api = SentinelAPI(user, password, 'https://apihub.copernicus.eu/apihub/')
 products = api.query(footprint,
-                     date=('20200109', '20200510'),
+                     date=('20211001', '20211010'),
                      platformname='Sentinel-2',
                      processinglevel='Level-2A',
                      cloudcoverpercentage=(0, 20))
@@ -30,3 +30,5 @@ products = api.query(footprint,
 gdf = api.to_geodataframe(products)
 gdf_sorted = gdf.sort_values(['cloudcoverpercentage'], ascending=[True])
 gdf_sorted
+
+
