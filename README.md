@@ -2,9 +2,6 @@
 
 Login credentials for Copernicus:
 
-Username: bobor
-
-Password: 12345678
 
 it is required to use python version 3.7.7 and install the following files from the wheels dir.
 
