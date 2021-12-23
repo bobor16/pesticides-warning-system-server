@@ -1,0 +1,55 @@
+version: "3.5"
+
+services:
+  datanode2: #Slave2
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode2
+    restart: always
+    ports:
+      - 9865:9864
+    volumes:
+      - hadoop_datanode2:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "Sem7-E21-GrpO-Node1:9870"
+    env_file:
+      - ./hadoop.env
+    networks:
+      cscourse:
+    extra_hosts:
+      - "datanode1:10.123.252.186"
+      - "namenode:10.123.252.186"
+      - "datanode3:10.123.252.154"
+    hostname: datanode2
+
+  hbase:
+    image: bde2020/hbase-standalone:1.0.0-hbase1.2.6
+    container_name: hbase
+    volumes:
+      - hbase_data:/hbase-data
+      - hbase_zookeeper_data:/zookeeper-data
+    ports:
+      - 16000:16000
+      - 16010:16010
+      - 16020:16020
+      - 16030:16030
+      - 2888:2888
+      - 3888:3888
+      - 2181:2181
+    environment:
+      SERVICE_PRECONDITION: "Sem7-E21-GrpO-Node1:9870"
+    env_file:
+      - ./hbase-standalone.env
+    networks:
+      cscourse:
+
+networks:
+  cscourse:
+    name: hadoop
+  confluent:
+    name: confluent
+
+volumes:
+ hadoop_datanode2:
+   name: datanode2
+ hbase_data:
+ hbase_zookeeper_data:
