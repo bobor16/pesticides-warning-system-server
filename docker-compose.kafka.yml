@@ -1,0 +1,18 @@
+version: '2'
+services:
+  kafka:
+    image: confluentinc/cp-kafka:6.2.0
+    container_name: kafka3
+    restart: always
+    ports:
+      - 9092:9092
+      - 9093:9093
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: namenode:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://datanode3:9092
+    extra_hosts:
+      - "datanode1:10.123.252.186"
+      - "namenode:10.123.252.186"
+      - "datanode2:10.123.252.249"
+      - "datanode3:10.123.252.154"
