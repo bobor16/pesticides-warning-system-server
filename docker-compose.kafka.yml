@@ -1,0 +1,40 @@
+version: '2'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.2.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+    network_mode: host
+    extra_hosts:
+      - "datanode3:10.123.252.154"
+      - "datanode2:10.123.252.249"
+      - "datanode1:10.123.252.186"
+      - "namenode:10.123.252.186"
+
+  kafka:
+    image: confluentinc/cp-kafka:6.2.0
+    container_name: kafka1
+    restart: always
+    network_mode: host
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: namenode:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://datanode1:9092
+    extra_hosts:
+      - "datanode3:10.123.252.154"
+      - "datanode2:10.123.252.249"
+      - "namenode:10.123.252.186"
+      - "datanode1:10.123.252.186"
+
+networks:
+  confluent:
+    name: confluent
+
+volumes:
+  confluent_kafka:
+    name: kafka
